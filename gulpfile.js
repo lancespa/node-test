@@ -5,17 +5,7 @@ const csslint = require('gulp-csslint');
 const babel = require('gulp-babel');
 const jshint = require('gulp-jshint');
 
-/*function build(cb) {
-*	var build = gulp.series(gulp.parallel(html,css,js));
-*	cb();
-*}
-*/
 
-/*
-* var build = gulp.series(gulp.parallel(html,css,js));
-*/
-
-var build = gulp.parallel(html,css,js);
 
 function html(cb) {
   return gulp.src('src/index.html')
@@ -48,6 +38,7 @@ function js(cb) {
         cb();
 }
 
+var build = gulp.parallel(html,css,js);
 
 exports.html = html;
 exports.css = css;
