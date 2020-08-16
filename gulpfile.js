@@ -5,35 +5,37 @@ const csslint = require('gulp-csslint');
 const babel = require('gulp-babel');
 const jshint = require('gulp-jshint');
 
-function defaultTask(cb) {
+/*function build(cb) {
+*	var build = gulp.series(gulp.parallel(html,css,js));
+*	cb();
+*}
+*/
 
-	cb();
-}
+/*
+* var build = gulp.series(gulp.parallel(html,css,js));
+*/
 
-exports.default = defaultTask
+var build = gulp.parallel(html,css,js);
 
 function html(cb) {
   return gulp.src('src/index.html')
         .pipe(htmltidy())
         .pipe(gulp.dest('build'));
-	cb()
+	cb();
 }
 
-exports.html = html
 
 function css(cb) {
     return gulp.src('src/style.css')
         .pipe(csslint())
         .pipe(csslint.formatter('compact'))
         .pipe(autoprefixer({
-            browsers: ['last 5 versions'],
+            browserlist: ['last 5 versions'],
             cascade: false
         }))
         .pipe(gulp.dest('build'));
-	callback()
+	cb();
 }
-
-exports.css = css
 
 function js(cb) {
     return gulp.src('src/main.js')
@@ -43,7 +45,16 @@ function js(cb) {
             presets: ['@babel/env']
         }))
         .pipe(gulp.dest('build'));
-        cb()
+        cb();
 }
 
-exports.js = js
+
+exports.html = html;
+exports.css = css;
+exports.js = js;
+exports.build = build;
+
+/*
+ * Define default task that can be called by just running `gulp` from cli
+ */
+exports.default = build;
